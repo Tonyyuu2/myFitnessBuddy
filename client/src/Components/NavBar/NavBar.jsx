@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
-    <nav className="w-screen h-1/4 bg-blue-900 p-5 text-white flex justify-between shadow-xl">
+    <nav className="w-screen bg-blue-900 p-5 text-white flex justify-between shadow-xl sticky top-0">
       <div>
-        <Link to='/'>
+        <Link to="/">
           <h1>myFitnessBuddy</h1>
         </Link>
       </div>
