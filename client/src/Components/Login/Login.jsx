@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 
 function Login() {
   return (
-    <div className="flex flex-col justify-center p-3 mt-20 gap-6 w-screen">
+    <div className="flex flex-col justify-center p-3 mt-20 gap-6 ">
       <div>
         <h1>Athlete Login</h1>
       </div>
