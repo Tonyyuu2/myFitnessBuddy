@@ -9,7 +9,7 @@ function Login() {
       <div>
         <h1>Athlete Login</h1>
       </div>
-      <FormControl className="gap-4 flex justify-center items-center w-full">
+      <FormControl className="gap-4 flex justify-center w-full">
         <TextField
           required
           sx={{
