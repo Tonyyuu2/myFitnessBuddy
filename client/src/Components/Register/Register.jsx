@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth.context";
 import Button from "../Button/Button";
 
+const emailRegex =
+  /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%/]).{8,24}$/;
+
+
 function Register() {
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -20,12 +25,13 @@ function Register() {
   });
   console.log('data :', data);
   const [error, setError] = useState({
-    titleError: false,
-    descriptionError: false,
-    locationError: false,
-    dateError: false,
-    imageError: false,
+    firstNameError: false,
+    lastNameError: false,
+    emailError: false,
+    passwordError: false,
+    retypePassError: false,
   });
+  console.log('error :', error);
   const firstNameRef = useRef();
 
   const handleChange = (e) => {
@@ -38,6 +44,17 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log('PRESSSED');
+    const testedFirstName = emailRegex.test(data.firstName)
+
+    if (data.firstName === "" || !testedFirstName) {
+      const firstNameErrorNew = (error.firstNameError = true);
+      setError((prev) => ({ ...prev, firstNameErrorNew }));
+      return;
+    } else {
+      const firstNameErrorNew = (error.firstNameError = false);
+      setError((prev) => ({ ...prev, firstNameErrorNew }));
+    }
   }
 
   return (
@@ -95,7 +112,7 @@ function Register() {
           type="password"
           onChange={handleChange}
         />
-        <Button children={"Register"} login={true} />
+        <Button children={"Register"} login={true} handleSubmit={handleSubmit}/>
       </FormControl>
     </div>
   );
