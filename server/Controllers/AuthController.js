@@ -1,4 +1,4 @@
-import UserModel from "../Models/UserModel";
+import UserModel from "../Models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const generateJwt = (id, secretKey) => {
-  return jwt.sign({ id }, secretKey, { expiresIn: "6h" });
+  return jwt.sign({ id }, secretKey, { expiresIn: "2h" });
 };
 
 export const userRegister = async (req, res) => {

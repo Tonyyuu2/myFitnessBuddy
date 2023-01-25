@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import AuthRoute from './Routes/AuthRoute.js'
-
+import AuthRoute from "./Routes/AuthRoute.js";
 
 const corsOptions = {
   origin: "*",
@@ -16,14 +15,16 @@ const app = express();
 
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb", extened: true }));
-app.use(express.urlencoded({ limit: "50mb", extened: true }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 dotenv.config();
 
-app.use("/auth", AuthRoute)
+app.use("/auth", AuthRoute);
+
+mongoose.set("strictQuery", true);
 
 mongoose
   .connect(process.env.ATLAS_URI, {
-    dbName: 'myFitnessBuddy',
+    dbName: "myFitnessBuddy",
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -33,4 +34,3 @@ mongoose
     })
   )
   .catch((error) => console.log(error));
-
