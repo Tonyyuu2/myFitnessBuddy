@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import AuthRoute from './Routes/AuthRoute.js'
+
 
 const corsOptions = {
   origin: "*",
