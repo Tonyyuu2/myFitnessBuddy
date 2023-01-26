@@ -11,7 +11,6 @@ const emailRegex =
   /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%/]).{8,24}$/;
 
-
 function Register() {
   const ctx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ function Register() {
     firstName: "",
     lastName: "",
   });
-  console.log('data :', data);
+  console.log("data :", data);
   const [error, setError] = useState({
     firstNameError: false,
     lastNameError: false,
@@ -31,7 +30,7 @@ function Register() {
     passwordError: false,
     retypePassError: false,
   });
-  console.log('error :', error);
+  console.log("error :", error);
   const firstNameRef = useRef();
 
   const handleChange = (e) => {
@@ -45,25 +44,32 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log('PRESSSED');
-    const testedEmail = emailRegex.test(data.firstName)
+    const testedEmail = emailRegex.test(data.firstName);
 
     if (data.firstName === "") {
-      const firstNameErrorNew = (error.firstNameError = true);
-      setError((prev) => ({ ...prev, firstNameErrorNew }));
-      return;
+      const firstNameError = (error.firstNameError = true);
+      setError((prev) => ({ ...prev, firstNameError }));
     } else {
-      const firstNameErrorNew = (error.firstNameError = false);
-      setError((prev) => ({ ...prev, firstNameErrorNew }));
+      const firstNameError = (error.firstNameError = false);
+      setError((prev) => ({ ...prev, firstNameError }));
     }
+
     if (data.lastName === "") {
-      const lastNameErrorNew = (error.lastNameError = true);
-      setError((prev) => ({ ...prev, lastNameErrorNew }));
-      return;
+      const lastNameError = (error.lastNameError = true);
+      setError((prev) => ({ ...prev, lastNameError }));
     } else {
-      const lastNameErrorNew = (error.lastNameError = false);
-      setError((prev) => ({ ...prev, lastNameErrorNew }));
+      const lastNameError = (error.lastNameError = false);
+      setError((prev) => ({ ...prev, lastNameError }));
     }
-  }
+
+    if (data.email === "" || !testedEmail) {
+      const emailError = (error.emailError = true);
+      setError((prev) => ({ ...prev, emailError }));
+    } else {
+      const emailError = (error.emailError = false);
+      setError((prev) => ({ ...prev, emailError }));
+    }
+  };
 
   return (
     <div className="flex flex-col p-3 gap-3 mt-20">
@@ -77,7 +83,12 @@ function Register() {
           }}
           label="First Name"
           type="text"
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e)
+            setError((prev) => {
+              return {...prev, firstNameError: false}
+            })
+          }}
           ref={firstNameRef}
           error={error.firstNameError}
         />
@@ -121,7 +132,11 @@ function Register() {
           type="password"
           onChange={handleChange}
         />
-        <Button children={"Register"} login={true} handleSubmit={handleSubmit}/>
+        <Button
+          children={"Register"}
+          login={true}
+          handleSubmit={handleSubmit}
+        />
       </FormControl>
     </div>
   );
