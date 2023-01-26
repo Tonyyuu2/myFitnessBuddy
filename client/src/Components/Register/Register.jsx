@@ -45,15 +45,23 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log('PRESSSED');
-    const testedFirstName = emailRegex.test(data.firstName)
+    const testedEmail = emailRegex.test(data.firstName)
 
-    if (data.firstName === "" || !testedFirstName) {
+    if (data.firstName === "") {
       const firstNameErrorNew = (error.firstNameError = true);
       setError((prev) => ({ ...prev, firstNameErrorNew }));
       return;
     } else {
       const firstNameErrorNew = (error.firstNameError = false);
       setError((prev) => ({ ...prev, firstNameErrorNew }));
+    }
+    if (data.lastName === "") {
+      const lastNameErrorNew = (error.lastNameError = true);
+      setError((prev) => ({ ...prev, lastNameErrorNew }));
+      return;
+    } else {
+      const lastNameErrorNew = (error.lastNameError = false);
+      setError((prev) => ({ ...prev, lastNameErrorNew }));
     }
   }
 
@@ -71,6 +79,7 @@ function Register() {
           type="text"
           onChange={handleChange}
           ref={firstNameRef}
+          error={error.firstNameError}
         />
         <TextField
           name="lastName"
