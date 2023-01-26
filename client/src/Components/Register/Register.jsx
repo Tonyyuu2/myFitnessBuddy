@@ -9,7 +9,7 @@ import Button from "../Button/Button";
 
 const emailRegex =
   /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%/]).{8,24}$/;
+const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%/]).{8,24}$/;
 
 function Register() {
   const ctx = useContext(AuthContext);
@@ -45,6 +45,7 @@ function Register() {
     e.preventDefault();
     // console.log('PRESSSED');
     const testedEmail = emailRegex.test(data.firstName);
+    const testedPwd = pwdRegex.test(data.password);
 
     if (data.firstName === "") {
       const firstNameError = (error.firstNameError = true);
@@ -69,6 +70,22 @@ function Register() {
       const emailError = (error.emailError = false);
       setError((prev) => ({ ...prev, emailError }));
     }
+
+    if (data.password === "" || !testedPwd) {
+      const passwordError = (error.passwordError = true);
+      setError((prev) => ({ ...prev, passwordError }));
+    } else {
+      const passwordError = (error.passwordError = false);
+      setError((prev) => ({ ...prev, passwordError }));
+    }
+
+    if (data.retypePwd === "" || data.retypePwd !== data.password) {
+      const retypePassError = (error.retypePassError = true);
+      setError((prev) => ({ ...prev, retypePassError }));
+    } else {
+      const retypePassError = (error.retypePassError = false);
+      setError((prev) => ({ ...prev, retypePassError }));
+    }
   };
 
   return (
@@ -84,10 +101,10 @@ function Register() {
           label="First Name"
           type="text"
           onChange={(e) => {
-            handleChange(e)
+            handleChange(e);
             setError((prev) => {
-              return {...prev, firstNameError: false}
-            })
+              return { ...prev, firstNameError: false };
+            });
           }}
           ref={firstNameRef}
           error={error.firstNameError}

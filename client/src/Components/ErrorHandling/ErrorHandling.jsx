@@ -1,6 +1,6 @@
 import React from "react";
 
-function ErrorHandling({ firstName, lastName, email, password, retypePwd,  }) {
+function ErrorHandling({ firstName, lastName, email, password, retypePwd }) {
   return (
     <p className="flex justify-center font-bold text-red-600">
       {firstName
