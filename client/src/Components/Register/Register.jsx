@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth.context";
 import Button from "../Button/Button";
+import ErrorHandling from "../ErrorHandling/ErrorHandling";
 
 const emailRegex =
   /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/;
@@ -82,11 +83,33 @@ function Register() {
     if (data.retypePwd === "" || data.retypePwd !== data.password) {
       const retypePassError = (error.retypePassError = true);
       setError((prev) => ({ ...prev, retypePassError }));
+      return
     } else {
       const retypePassError = (error.retypePassError = false);
       setError((prev) => ({ ...prev, retypePassError }));
     }
+
+    // so it doesn't submit form
+    if (error.firstNameError) {
+      return 
+    } else if (error.lastNameError) {
+      return 
+    } else if (error.emailError) {
+      return
+    } else if (error.passwordError) {
+      return
+    } else if (error.retypePassError) {
+      return
+    }
+
+    try {
+
+    } catch (err) {
+
+    }
   };
+
+  //work experience #1
 
   return (
     <div className="flex flex-col p-3 gap-3 mt-20">
@@ -109,6 +132,7 @@ function Register() {
           ref={firstNameRef}
           error={error.firstNameError}
         />
+        {error.firstNameError && <ErrorHandling firstName={true} />}
         <TextField
           name="lastName"
           required
@@ -117,8 +141,15 @@ function Register() {
           }}
           label="Last Name"
           type="text"
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+            setError((prev) => {
+              return { ...prev, lastNameError: false };
+            });
+          }}
+          error={error.lastNameError}
         />
+        {error.lastNameError && <ErrorHandling lastName={true} />}
         <TextField
           name="email"
           required
@@ -127,8 +158,15 @@ function Register() {
           }}
           label="Email"
           type="email"
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+            setError((prev) => {
+              return { ...prev, emailError: false };
+            });
+          }}
+          error={error.emailError}
         />
+        {error.emailError && <ErrorHandling email={true} />}
         <TextField
           name="password"
           required
@@ -137,8 +175,15 @@ function Register() {
           }}
           label="Password"
           type="password"
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+            setError((prev) => {
+              return { ...prev, passwordError: false };
+            });
+          }}
+          error={error.passwordError}
         />
+        {error.passwordError && <ErrorHandling password={true} />}
         <TextField
           name="retypePwd"
           required
@@ -147,8 +192,15 @@ function Register() {
           }}
           label="Retype Password"
           type="password"
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+            setError((prev) => {
+              return { ...prev, retypePassError: false };
+            });
+          }}
+          error={error.retypePassError}
         />
+        {error.retypePassError && <ErrorHandling retypePwd={true} />}
         <Button
           children={"Register"}
           login={true}

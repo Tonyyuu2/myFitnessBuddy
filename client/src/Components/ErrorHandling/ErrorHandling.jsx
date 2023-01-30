@@ -8,11 +8,11 @@ function ErrorHandling({ firstName, lastName, email, password, retypePwd }) {
         : lastName
         ? "❌ Surnames make the world go round you know. ❌"
         : email
-        ? "❌ How else would people stalk you? ❌"
+        ? "❌ I swear we don't send spam... ❌"
         : password
-        ? "❌ Are you sure that date is correct?❌ "
+        ? "❌ Big brother is watching.❌ "
         : retypePwd
-        ? "❌ I know it's hard... But I need a better picture ❌"
+        ? "❌ Either you're trolling or it's not a match ❌"
         : "❌ Error!! Error!! Something is amiss ❌"}
     </p>
   );
